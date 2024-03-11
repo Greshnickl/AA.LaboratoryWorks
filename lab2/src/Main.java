@@ -6,7 +6,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import javax.swing.*;
 import java.awt.*;
 
-public class SortingAlgorithmsComparison {
+public class Main {
 
     public static void main(String[] args) {
         Algorithms alg = new Algorithms();
