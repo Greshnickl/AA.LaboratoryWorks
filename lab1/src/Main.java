@@ -1,3 +1,11 @@
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import javax.swing.*;
+import java.awt.*;
+
 public class Main {
     public static void main(String[] args) {
         Algorithms alg = new Algorithms();
@@ -14,45 +22,60 @@ public class Main {
         for (int i = 0; i < firstInput.length; i++) {
             int n = firstInput[i];
 
-            // Test the time of execution of the recursive approach
             long start = System.nanoTime();
             alg.recursiveApproach(n);
             long end = System.nanoTime();
             timeRecursive[i] = end - start;
 
-            // Test the time of execution of the iterative approach
             start = System.nanoTime();
             alg.iterativeApproach(n);
             end = System.nanoTime();
             timeIterative[i] = end - start;
 
-            // Test the time of execution of the matrix approach
             start = System.nanoTime();
             alg.fibonacciMatrix(n);
             end = System.nanoTime();
             timeMatrix[i] = end - start;
 
-            // Test the time of execution of the memoization approach
             start = System.nanoTime();
             alg.fibonacciMemoization(n);
             end = System.nanoTime();
             timeMemoization[i] = end - start;
 
-            // Test the time of execution of the Binet approach
             start = System.nanoTime();
             alg.fibonacciBinet(n);
             end = System.nanoTime();
             timeBinet[i] = end - start;
 
-            // Test the time of execution of the bottom-up approach
             start = System.nanoTime();
             alg.fibonacciBottomUp(n);
             end = System.nanoTime();
             timeBottomUp[i] = end - start;
         }
 
+        // Create dataset for first input
+        XYSeriesCollection dataset1 = createDataset(firstInput, timeRecursive, timeIterative, timeMatrix, timeMemoization, timeBinet, timeBottomUp);
+
+        // Create chart for first input
+        JFreeChart chart1 = ChartFactory.createXYLineChart(
+                "Results for the first input", // Chart title
+                "Input Size",                  // X-axis label
+                "Time (nanoseconds)",          // Y-axis label
+                dataset1                       // Dataset
+        );
+
+        // Create panel for first input
+        ChartPanel panel1 = new ChartPanel(chart1);
+
+        // Create frame for first input
+        JFrame frame1 = new JFrame("Results for the first input");
+        frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame1.setLayout(new BorderLayout());
+        frame1.add(panel1, BorderLayout.CENTER);
+        frame1.pack();
+        frame1.setVisible(true);
+
         // Print results for the first input
-        System.out.println("Results for the first input:");
         printResults(firstInput, timeRecursive, timeIterative, timeMatrix, timeMemoization, timeBinet, timeBottomUp);
 
         // Reinitialize time arrays for second input
@@ -65,40 +88,71 @@ public class Main {
         for (int i = 0; i < secondInput.length; i++) {
             int n = secondInput[i];
 
-            // Test the time of execution of the iterative approach
             long start = System.nanoTime();
             alg.iterativeApproach(n);
             long end = System.nanoTime();
             timeIterative[i] = end - start;
 
-            // Test the time of execution of the matrix approach
             start = System.nanoTime();
             alg.fibonacciMatrix(n);
             end = System.nanoTime();
             timeMatrix[i] = end - start;
 
-            // Test the time of execution of the memoization approach
             start = System.nanoTime();
             alg.fibonacciMemoization(n);
             end = System.nanoTime();
             timeMemoization[i] = end - start;
 
-            // Test the time of execution of the Binet approach
             start = System.nanoTime();
             alg.fibonacciBinet(n);
             end = System.nanoTime();
             timeBinet[i] = end - start;
 
-            // Test the time of execution of the bottom-up approach
             start = System.nanoTime();
             alg.fibonacciBottomUp(n);
             end = System.nanoTime();
             timeBottomUp[i] = end - start;
         }
 
+        // Create dataset for second input
+        XYSeriesCollection dataset2 = createDataset(secondInput, timeIterative, timeMatrix, timeMemoization, timeBinet, timeBottomUp);
+
+        // Create chart for second input
+        JFreeChart chart2 = ChartFactory.createXYLineChart(
+                "Results for the second input", // Chart title
+                "Input Size",                   // X-axis label
+                "Time (nanoseconds)",           // Y-axis label
+                dataset2                        // Dataset
+        );
+
+        // Create panel for second input
+        ChartPanel panel2 = new ChartPanel(chart2);
+
+        // Create frame for second input
+        JFrame frame2 = new JFrame("Results for the second input");
+        frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame2.setLayout(new BorderLayout());
+        frame2.add(panel2, BorderLayout.CENTER);
+        frame2.pack();
+        frame2.setVisible(true);
+
         // Print results for the second input
-        System.out.println("Results for the second input:");
         printResults(secondInput, timeIterative, timeMatrix, timeMemoization, timeBinet, timeBottomUp);
+    }
+
+    private static XYSeriesCollection createDataset(int[] input, long[]... times) {
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        String[] labels = {"Recursive", "Iterative", "Matrix", "Memoization", "Binet", "Bottom Up"};
+
+        for (int i = 0; i < times.length; i++) {
+            XYSeries series = new XYSeries(labels[i]);
+            for (int j = 0; j < input.length; j++) {
+                series.add(input[j], times[i][j]);
+            }
+            dataset.addSeries(series);
+        }
+
+        return dataset;
     }
 
     private static void printResults(int[] input, long[]... times) {
