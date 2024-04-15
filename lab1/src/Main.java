@@ -156,8 +156,8 @@ public class Main {
     }
 
     private static void printResults(int[] input, long[]... times) {
-        System.out.printf("%-10s %-12s %-12s %-12s %-12s %-12s %-12s%n",
-                "Input Size", "Recursive", "Iterative", "Matrix", "Memoization", "Binet", "Bottom Up");
+        System.out.printf("%-10s %-12s %-12s %-12s %-12s %-12s%n",
+                "Input Size", "Iterative", "Matrix", "Memoization", "Binet", "Bottom Up");
         for (int i = 0; i < input.length; i++) {
             System.out.printf("%-10d ", input[i]);
             for (long[] time : times) {

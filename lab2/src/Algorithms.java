@@ -67,15 +67,11 @@ public class Algorithms {
     public void mergeSort(int[] arr) {
         if (arr.length > 1) {
             int mid = arr.length / 2;
-
             int[] L = Arrays.copyOfRange(arr, 0, mid);
             int[] R = Arrays.copyOfRange(arr, mid, arr.length);
-
             mergeSort(L);
             mergeSort(R);
-
             int i = 0, j = 0, k = 0;
-
             while (i < L.length && j < R.length) {
                 if (L[i] <= R[j]) {
                     arr[k] = L[i];
@@ -86,13 +82,11 @@ public class Algorithms {
                 }
                 k++;
             }
-
             while (i < L.length) {
                 arr[k] = L[i];
                 i++;
                 k++;
             }
-
             while (j < R.length) {
                 arr[k] = R[j];
                 j++;
@@ -104,22 +98,17 @@ public class Algorithms {
     public int[] countSort(int[] inputArray) {
         int M = Arrays.stream(inputArray).max().getAsInt();
         int[] countArray = new int[M + 1];
-
         for (int num : inputArray) {
             countArray[num]++;
         }
-
         for (int i = 1; i <= M; i++) {
             countArray[i] += countArray[i - 1];
         }
-
         int[] outputArray = new int[inputArray.length];
-
         for (int i = inputArray.length - 1; i >= 0; i--) {
             outputArray[countArray[inputArray[i]] - 1] = inputArray[i];
             countArray[inputArray[i]]--;
         }
-
         return outputArray;
     }
 }
